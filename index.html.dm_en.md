@@ -610,6 +610,7 @@ Read   | Account | api/v1/contract_sub_account_info     | POST             |  Qu
 Read   |  Account  | api/v1/contract_sub_position_info    | POST             | Query a single sub-account's position information    | Yes   |
 Read   | Account  | api/v1/contract_financial_record    | POST             | Query account financial records  | Yes   |
 Read     |  User Account           |  api/v1/contract_order_limit |  POST       |  Query contract information on order limit            |  Yes  |
+Read     |  User Account           |  api/v1/contract_available_level_rate |  POST       |  Query contract available level rate            |  Yes  |
 Read     |  User Account           |  api/v1/contract_fee |       POST       | Query information on contract trading fee            |  Yes  |       
 Read     |  User Account           |  api/v1/contract_transfer_limit |     POST       |  Query information on Transfer Limit            |  Yes  |
 Read     |  User Account           |  api/v1/contract_position_limit |     POST       |  Query information on position limit            |  Yes  |
@@ -5140,6 +5141,7 @@ This contract type doesn't exist.  |              |
   Read  |  Market Data Interface |           market.$symbol.kline.$period  |              req        |     Request Kline Data|  Nos  |
  Read  |     Market Data Interface      |  market.$symbol.depth.$type  |               sub        |       Subscribe Market Depth Data | No | 
  Read  |     Market Data Interface      |  market.$symbol.depth.size_${size}.high_freq  |               sub        |       Subscribe Incremental Market Depth Data | No | 
+ Read  |     Market Data Interface      |  market.$symbol.bbo  |               sub        |       Subscribe BBO Data | No | 
  Read  |      Market Data Interface       |  market.$symbol.detail  |               sub        |    Subscribe Market Detail Data    |   No  |
  Read   |     Market Data Interface        |  market.$symbol.trade.detail  |               req        |    Request Trade Detail Data |  No|
 Read  |    Market Data Interface         |  market.$symbol.trade.detail  |        sub |  Subscribe Trade Detail Data | No  | 
