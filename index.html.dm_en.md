@@ -1439,7 +1439,7 @@ curl "https://api.hbdm.com/api/v1/contract_contract_info"
   Parameter Name   |   Type   |   Mandatory   |   Description   |
 ------------------ | -------- | ------------- | --------------- |
 symbol             | string   | false         | Case-Insenstive.Both uppercase and lowercase are supported.e.g. "BTC","ETH"...  |
-contract_type | string   | false      | "this_week","next_week", "quarter" |
+contract_type | string   | false      | "this_week","next_week", "quarter" "next_quarter" |
 contract_code | string   | false      | BTC180914|
 
 ### Note：
@@ -1475,7 +1475,7 @@ status                         | true          | string   | Request Processing R
 \<list\>(Attribute Name: data) |               |          |                                               |                                                              |
 symbol                         | true          | string   | Product Code                                  | "BTC","ETH"...                                               |
 contract_code                  | true          | string   | Contract Code                                 | "BTC180914" ...                                              |
-contract_type                  | true          | string   | Contract Type                                 | "this_week","next_week", "quarter"                           |
+contract_type                  | true          | string   | Contract Type                                 | "this_week","next_week", "quarter" ,"next_quarter"                          |
 contract_size                  | true          | decimal  | Contract Value (USD of one contract)          | 10, 100...                                                   |
 price_tick                     | true          | decimal  | Minimum Variation of Contract Price           | 0.001, 0.01...                                               |
 delivery_date                  | true          | string   | Contract Delivery Date                        | eg "20180720"                                                |
@@ -1543,7 +1543,7 @@ curl "https://api.hbdm.com/api/v1/contract_price_limit?symbol=BTC&contract_type=
 |   Parameter Name   |   Parameter Type   |   Mandatory   |   Desc                                            |
 | ------------------ | ------------------ | ------------- | ------------------------------------------------- |
 | symbol             | string             | false         | Case-Insenstive.Both uppercase and lowercase are supported.e.g."BTC","ETH"...                                    |
-| contract_type      | string             | false         | Contract Type ("this_week","next_week","quarter") |
+| contract_type      | string             | false         | Contract Type ("this_week","next_week","quarter", "next_quarter") |
 | contract_code      | string             | false         | BTC180914  ...                                    |
 
 ###  Note  ：
@@ -1579,7 +1579,7 @@ One of the query conditions must be chosen.
 | high_limit                     | true          | decimal  | Highest Buying Price                          |                                   |
 | low_limit                      | true          | decimal  | Lowest Selling Price                          |                                   |
 | contract_code                  | true          | string   | Contract Code                                 | eg "BTC180914"  ...               |
-| contract_type                  | true          | string   | Contract Type                                 | "this_week","next_week","quarter" |
+| contract_type                  | true          | string   | Contract Type                                 | "this_week","next_week","quarter" ,"next_quarter" |
 | \<list\>                       |               |          |                                               |                                   |
 | ts                             | true          | long     | Time of Respond Generation, Unit: Millisecond |                                   |
 
@@ -1626,7 +1626,7 @@ curl "https://api.hbdm.com/api/v1/contract_open_interest?symbol=BTC&contract_typ
 | status                         | true          | string   | Request Processing Result                     | "ok" , "error"                    |
 | \<list\>(Attribute Name: data) |               |          |                                               |                                   |
 | symbol                         | true          | string   | Variety code                                  | "BTC", "ETH" ...                  |
-| contract_type                  | true          | string   | Contract Type                                 | "this_week","next_week","quarter" |
+| contract_type                  | true          | string   | Contract Type                                 | "this_week","next_week","quarter", "next_quarter" |
 | volume                         | true          | decimal  | Position quantity(amount)                     |                                   |
 | amount                         | true          | decimal  | Position quantity(Currency)                   |                                   |
 | contract_code                  | true          | string   | Contract Code                                 | eg "BTC180914"   ...              |
@@ -1690,7 +1690,7 @@ curl "https://api.hbdm.com/market/depth?symbol=BTC_CQ&type=step5"
 
 |   Parameter Name   |   Parameter Type   |   Mandatory   |   Desc                                                       |
 | ------------------ | ------------------ | ------------- | ----------------------------------------------------------------- |
-| symbol             | string             | true          | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter” |
+| symbol             | string             | true          | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”."BTC_NQ" represents BTC “Next Quarter” |
 | type               | string             | true          | Get depth data within step 150, use step0, step1, step2, step3, step4, step5（merged depth data 0-5）；when step is 0，depth data will not be merged; Get depth data within step 20, use step6, step7, step8, step9, step10, step11(merged depth data 7-11); when step is 6, depth data will not be merged. |
 
 >tick illustration:
@@ -1792,7 +1792,7 @@ curl "https://api.hbdm.com/market/history/kline?period=1min&size=200&symbol=BTC_
 
 |   Parameter Name   |   Mandatory   |   Type   |   Desc               |   Default   |   Value Range                                                |
 | ------------------ | ------------- | -------- | -------------------- | ----------- | ------------------------------------------------------------ |
-| symbol             | true          | string   | Contract Name        |             | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter” |
+| symbol             | true          | string   | Contract Name        |             | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”."BTC_NQ" represents BTC “Next Quarter” |
 | period             | true          | string   | K-Line Type          |             | 1min, 5min, 15min, 30min, 60min, 1hour,4hour,1day, 1mon      |
 | size               | true         | integer  | Acquisition Quantity | 150         | [1,2000]                                                     |
 | from              | false         | integer  | start timestamp seconds. |         |                                                    |
@@ -1890,7 +1890,7 @@ curl "https://api.hbdm.com/market/detail/merged?symbol=BTC_CQ"
 
 |   Parameter Name   |   Mandatory   |   Type   |   Desc        |   Default   |   Value Range                                                |
 | ------------------ | ------------- | -------- | ------------- | ----------- | ------------------------------------------------------------ |
-| symbol             | true          | string   | Contract Name |             | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter” |
+| symbol             | true          | string   | Contract Name |             | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”."BTC_NQ" represents BTC “Next Quarter” |
 
 > tick Illustration:
 
@@ -1958,7 +1958,7 @@ curl "https://api.hbdm.com/market/trade?symbol=BTC_CQ"
 
 |   Parameter Name   |   Mandatory   |   Type   |   Desc        |   Default   |   Value Range                                                |
 | ------------------ | ------------- | -------- | ------------- | ----------- | ------------------------------------------------------------ |
-| symbol             | true          | string   | Contract Name |             | Case-Insenstive.Both uppercase and lowercase are supported.. e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter” |
+| symbol             | true          | string   | Contract Name |             | Case-Insenstive.Both uppercase and lowercase are supported.. e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”."BTC_NQ" represents BTC “Next Quarter” |
 
 > Tick Illustration：
 
@@ -2026,7 +2026,7 @@ curl "https://api.hbdm.com/market/history/trade?symbol=BTC_CQ&size=100"
 
 |   Parameter Name   |   Mandatory   |   Data Type   |   Desc                                |   Default   |   Value Range                                                |
 | ------------------ | ------------- | ------------- | ------------------------------------- | ----------- | ------------------------------------------------------------ |
-| symbol             | true          | string        | Contract Name                         |             | Case-Insenstive.Both uppercase and lowercase are supported.. e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter” |
+| symbol             | true          | string        | Contract Name                         |             | Case-Insenstive.Both uppercase and lowercase are supported.. e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”."BTC_NQ" represents BTC “Next Quarter” |
 | size               | true         | number        | Number of Trading Records Acquisition | 1           | [1, 2000]                                                    |
 
 > data Illustration：
@@ -2253,7 +2253,7 @@ curl "https://api.hbdm.com/api/v1/contract_his_open_interest?symbol=BTC&contract
 |   Parameter Name                |   Mandatory   |   Type    |    Desc             |    Data Range       |
 | ----------------------- | -------- | ------- | ------------------ | -------------- |
 | symbol | true | string | Contract Code   | Case-Insenstive.Both uppercase and lowercase are supported."BTC","ETH"... |
-| contract_type| true | string | Contract Type | Weekly:"this_week", Bi-weekly:"next_week", -Quarterly:"quarter" |
+| contract_type| true | string | Contract Type | Weekly:"this_week", Bi-weekly:"next_week", Quarterly:"quarter" Next Quarterly Contract: "next_quarter" |
 | period | true | string | Period Type | 1 hour:"60min"，4 hours:"4hour"，12 hours:"12hour"，1 day:"1day" |
 | size | false | int | Request Amount | Default：48，Data Range [1,200]  |
 | amount_type | true | int | Open interest unit | 1:-cont，2:-cryptocurrenty |
@@ -2286,7 +2286,7 @@ curl "https://api.hbdm.com/api/v1/contract_his_open_interest?symbol=BTC&contract
 | ts | true  | long | Time of Respond Generation, Unit: Milesecond |  |
 | \<data\> |  |  | Dictionary Data |  |
 | symbol | true | string | Contract Code   | "BTC","ETH"... |
-| contract_type| true | string | Contract Type  | Weekly:"this_week", Bi-weekly:"next_week", -Quarterly:"quarter"  |
+| contract_type| true | string | Contract Type  | Weekly:"this_week", Bi-weekly:"next_week", Quarterly:"quarter"  Next Quarterly Contract: "next_quarter" |
 | \<tick\> |  |  |  |  |   
 | volume | true | decimal | Open Interest |  |
 | amount_type | true | int | Open Interest Unit | 1:-cont，2:- cryptocurrency  |
@@ -2620,7 +2620,7 @@ curl "https://api.hbdm.com/index/market/history/basis?symbol=BTC-USD&period=1min
 ### request parameters
 | **Parameter name**    | **Mandatory** | **Type** | **Desc**        | **Default** | **Value Range**                                 |
 | ----------- | -------- | ------ | ------------- | ------- | ---------------------------------------- |
-| symbol      | true     | string | symbol name          |         | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”.                          |
+| symbol      | true     | string | symbol name          |         | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”."BTC_NQ" represents BTC “Next Quarter”.                          |
 | period          | true     | string  | kline period               |         | 1min,5min, 15min, 30min, 60min,4hour,1day,1mon     |
 | basis_price_type          | false     | string  | use basis price type to calculate the basis data       |    Using open price default   |    open price："open"，close price："close"，highest price："high"，lowest price："low"，avg=（high price +low price）/2："average"   |
 | size  | true     | integer    | data size         | 150 | [1,2000] |
@@ -2789,7 +2789,7 @@ curl "https://api.hbdm.com/index/market/history/basis?symbol=BTC-USD&period=1min
 | \<list\>(Attribute Name: data) |               |          |                                               |                                     |
 | symbol                         | true          | string   | Variety code                                  | "BTC","ETH"...                      |
 | contract_code                  | true          | string   | Contract Code                                 | "BTC180914" ...                     |
-| contract_type                  | true          | string   | Contract Type                                 | "this_week", "next_week", "quarter" |
+| contract_type                  | true          | string   | Contract Type                                 | "this_week", "next_week", "quarter", "next_quarter" |
 | volume                         | true          | decimal  | Position quantity                             |                                     |
 | available                      | true          | decimal  | Available position can be closed              |                                     |
 | frozen                         | true          | decimal  | frozen                                        |                                     |
@@ -2997,7 +2997,7 @@ curl "https://api.hbdm.com/index/market/history/basis?symbol=BTC-USD&period=1min
 | \<data\> |  |  |  |  |
 | symbol                  | true     | string  | type code               | "BTC","ETH"... |
 | contract_code                | true     | string  |  contract code             | "BTC180914" ... |
-| contract_type                | true     | string  | contract type              | Weekly:"this_week", Biweekly:"next_week", Quarterly:"quarter" |
+| contract_type                | true     | string  | contract type              | Weekly:"this_week", Biweekly:"next_week", Quarterly:"quarter", Next Quarterly Contract: "next_quarter"  |
 | volume                | true     | decimal	  |  open interest             |  |
 | available               | true     | decimal	  | available positions to close              |  |
 | frozen               | true     | decimal	  |  amount of frozen positions             |  |
@@ -3126,7 +3126,7 @@ curl "https://api.hbdm.com/index/market/history/basis?symbol=BTC-USD&period=1min
 | \<list\> |  |  |  |  |
 | symbol | true  | string | Contract Code | "BTC","ETH"... |
 | \<types\> |  |  |  |  |
-| contract_type| true | string | Contract Type | Weekly:"this_week", Bi-weekly:"next_week", Quarterly:"quarter" |
+| contract_type| true | string | Contract Type | Weekly:"this_week", Bi-weekly:"next_week", Quarterly:"quarter". Next Quarterly Contract: "next_quarter" |
 | open_limit | true | long | Max open order limit | |
 | close_limit | true | long | Max close order limit |  |
 | \</types\> |  |  |  |  |
@@ -3289,7 +3289,7 @@ curl "https://api.hbdm.com/index/market/history/basis?symbol=BTC-USD&period=1min
 | \<data\> |  |  |  |  |
 | symbol | true  | string | Contract Code | "BTC","ETH"... |
 | \<list\> |  |  |  |  |
-| contract_type| true | string | Contract Type | Weekly :"this_week", Bi-weekly:"next_week", Quarterly:"quarter"，All contracts:“all” |
+| contract_type| true | string | Contract Type | Weekly :"this_week", Bi-weekly:"next_week", Quarterly:"quarter"， Next Quarterly Contract: "next_quarter" |
 | buy_limit | true | decimal | Max long position limit, Unit: Cont |  |
 | sell_limit | true | decimal | Max short position limit, Unit: Cont |  |
 | \</list\> |  |  |  |  |
@@ -3368,7 +3368,7 @@ margin_static | decimal  | true  | Static Margin                          |
 \<list\>(Attrs: positions) |              |          |                            |
 symbol | String | true | Variety Code                                                    |
 contract_code |  string | true  | Contract Code	"BTC180914" ...                         |
-contract_type  | string |  true | Contract Type	"this_week", "next_week", "quarter"     |
+contract_type  | string |  true | Contract Type	"this_week", "next_week", "quarter"  "next_quarter"    |
 volume  | decimal  |  true | Position Quantity                                           |
 available  |  decimal |  true  | Available position quatity can be closed                |
 frozen  |  decimal |  true | forzen postion Quantity                                     |
@@ -3676,14 +3676,14 @@ last_price | decimal  | true  | Last Price                                      
 |   Parameter Name   |   Parameter Type   |   Mandatory   |   Desc                                                       |
 | ------------------ | ------------------ | ------------- | ------------------------------------------------------------ |
 | symbol             | string             | false         |Case-Insenstive.Both uppercase and lowercase are supported. "BTC","ETH"...                                               |
-| contract_type      | string             | false         | Contract Type ("this_week": "next_week": "quarter":)         |
+| contract_type      | string             | false         | Contract Type ("this_week": "next_week": "quarter": "next_quarter")         |
 | contract_code      | string             | false         | BTC180914                                                    |
 | client_order_id    | long               | false         | Clients fill and maintain themselves.must be Less or Equal than 9223372036854775807 |
 | price              | decimal            | false          | Price                                                        |
 | volume             | long               | true          | Numbers of orders (amount)                                   |
 | direction          | string             | true          | Transaction direction                                        |
 | offset             | string             | true          | "open", "close"                                              |
-| lever_rate         | int                | true          | Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate |
+| lever_rate         | int                | true          | Leverage rate [if“Open”is multiple orders in 10 rate, there will be not multiple orders in 20 rate.] |
 | order_price_type   | string             | true     |  "limit”: Limit Order "opponent":BBO "post_only": Post-Only Order, No order limit but position limit for post-only orders.,optimal_5： Optimal , optimal_10： Optimal 10, optimal_20：Optimal 20，ioc: IOC Order,，fok：FOK Order. "opponent_ioc"：IOC order using the BBO price，"optimal_5_ioc"：optimal_5 IOC，"optimal_10_ioc"：optimal_10 IOC，"optimal_20_ioc"：optimal_20 IOC, "opponent_fok"：FOK order using the BBO price，"optimal_5_fok"：optimal_5 FOK，"optimal_10_fok"：optimal_10 FOK，"optimal_20_fok"：optimal_20 FOK |
 
 ###  Note ： 
@@ -3750,7 +3750,7 @@ The return order_id is 18 bits, it will make  mistake when nodejs and JavaScript
 |   Parameter Name                      |   Parameter Type   |   Mandatory   |   Desc                                                       |
 | ------------------------------------- | ------------------ | ------------- | ------------------------------------------------------------ |
 | symbol                                | string             | false         |Case-Insenstive.Both uppercase and lowercase are supported. "BTC","ETH"...                                               |
-| contract_type                         | string             | false         | Contract Type: "this_week": "next_week": "quarter":          |
+| contract_type                         | string             | false         | Contract Type: "this_week": "next_week": "quarter": "next_quarter"          |
 | contract_code                         | string             | false         | BTC180914                                                     |
 | client_order_id                       | long              | false          | Clients fill and maintain themselves.Must be Less or Equal than 9223372036854775807 |
 | price                                 | decimal            | false          | Price                                                        |
@@ -3977,7 +3977,7 @@ The return data from Cancel An Order Interface only means that order cancelation
 |   Parameter Name                 |    Mandatory    |   Type   |   Desc             |   Value Range       |
 | ----------------------- | -------- | ------- | ------------------ | -------------- |
 | symbol | false | String | Contract Code	 | Case-Insenstive.Both uppercase and lowercase are supported."BTC","ETH"... |
-| contract_type | false | String | Contract Type | “this_week”:Weekly，“next_week”:Bi-weekly，“quarter”:Quarterly|
+| contract_type | false | String | Contract Type | “this_week”:Weekly，“next_week”:Bi-weekly，“quarter”:Quarterly ,Next Quarterly Contract: "next_quarter"|
 | contract_code | false | String | Contract Code | BTC190903 |
 | volume | true | int | Order Quantity(Cont) |  |
 | direction | true | String | “buy”:Open，“sell”:Close |  |
@@ -4098,7 +4098,9 @@ client_order_id，order status query is available for orders placed within 24 ho
       "margin_frozen": 10,
       "profit ": 10,
       "status": 0,
-      "fee_asset":"BTC"
+      "fee_asset":"BTC",
+      "liquidation_type": 1,
+      "canceled_at":1490759594752 
      }
     ],
   "ts": 1490759594752
@@ -4112,7 +4114,7 @@ client_order_id，order status query is available for orders placed within 24 ho
 | status                         | true          | string   | Request Processing Result                                    | "ok" , "error"                      |
 | \<list\>(Attribute Name: data) |               |          |                                                              |                                     |
 | symbol                         | true          | string   | Variety code                                                 |                                     |
-| contract_type                  | true          | string   | Contract Type                                                | "this_week", "next_week", "quarter" |
+| contract_type                  | true          | string   | Contract Type                                                | "this_week", "next_week", "quarter","next_quarter" |
 | contract_code                  | true          | string   | Contract Code                                                | "BTC180914" ...                     |
 | volume                         | true          | decimal  | Numbers of order                                             |                                     |
 | price                          | true          | decimal  | Price committed                                              |                                     |
@@ -4122,6 +4124,7 @@ client_order_id，order status query is available for orders placed within 24 ho
 | lever_rate                     | true          | int      | Leverage rate                                                | 1\\5\\10\\20                        |
 | order_id                       | true          | bigint     | Order ID                                                     |                                     |
 | order_id_str                       | true          | string     | Order ID                                                     |                                     |
+| order_type         |	true         |	int     |  Order type: 1. Quotation; 2. Cancelled order; 3. Forced liquidation; 4. Delivery Order  |
 | client_order_id                | true          | long     | Client order ID                                              |                                     |
 | created_at                     | true          | long     | Creation time                                             |                                     |
 | trade_volume                   | true          | decimal  | Transaction quantity                                         |                                     |
@@ -4133,6 +4136,8 @@ client_order_id，order status query is available for orders placed within 24 ho
 | status                         | true          | int      | status: 1. Ready to submit the orders; 2. Ready to submit the orders; 3. Have sumbmitted the orders; 4. Orders partially matched; 5. Orders cancelled with  partially matched; 6. Orders fully matched; 7. Orders cancelled; 11. Orders cancelling. |                                     |
 | order_source                   | true          | string   | Order source（system、web、api、m 、risk、settlement） |                                     |
 | fee_asset | true  | string | the corresponding cryptocurrency to the given fee | "BTC","ETH"... |
+|  canceled_at                       | true         | long      |  Cancellation time   |      |
+| liquidation_type              | true | string     | 0:Not Forced Liquidation Type，1：Netting Type， 2: Partial Takeover，3：All Takeover       |                                          |
 | \</list\>                      |               |          |                                                              |                                     |
 | ts                             | true          | long     | Timestamp                                                    |                                     |
 
@@ -4159,7 +4164,7 @@ client_order_id，order status query is available for orders placed within 24 ho
 When getting information on order cancellation via query order detail interface, users who type in parameters “created_at” and “order_type” can query last 15-day data, while users who don’t type in parameters “created_at” and “order_type” can only query last 24-hour data.
 
 
-The return order_id is 18 bits, it will make  mistake when nodejs and JavaScript analysed 18 bits. Because the Json.parse in nodejs and JavaScript is int by default. so the number over 18 bits need be parsed by jaso-bigint package.
+The return order_id is 18 bits, it will make  mistake when nodejs and JavaScript analysed 18 bits. Because the Json.parse in nodejs and JavaScript is int by default. so the number over 18 bits need be parsed by jason-bigint package.
 
 created_at should use timestamp of long type as 13 bits (include Millisecond), if send the accurate timestamp for "created_at", query performance will be improved.
 
@@ -4185,6 +4190,15 @@ Please note that created_at can't send "0"
     "margin_frozen": 10,
     "profit": 10,
     "order_source": "web",
+    "order_id": 633766664829804544,
+    "order_id_str": "633766664829804544",
+    "client_order_id": 10683,
+    "order_type": 1,
+    "status": 6,
+    "trade_volume": 1,
+    "trade_turnover": 1200,
+    "trade_avg_price": 10,
+    "fee": 0,
     "created_at": 1408076414000,
     "canceled_at": 1408076414000,
     "final_interest": 0,
@@ -4228,7 +4242,7 @@ Please note that created_at can't send "0"
 | status                            | true          | string   | Request Processing Result                                    | "ok" , "error"                    |
 | \<object\> (Attribute Name: data) |               |          |                                                              |                                   |
 | symbol                            | true          | string   | Variety code                                                 |                                   |
-| contract_type                     | true          | string   | Contract Type                                                | "this_week","next_week","quarter" |
+| contract_type                     | true          | string   | Contract Type                                                | "this_week","next_week","quarter","next_quarter" |
 | contract_code                     | true          | string   | Contract Code                                                | "BTC180914" ...                   |
 | lever_rate                        | true          | int      | Leverage Rate                                                | 1\\5\\10\\20                      |
 | direction                         | true          | string   | Transaction direction                                        |                                   |
@@ -4241,6 +4255,15 @@ Please note that created_at can't send "0"
 | order_price_type                  | true          | string   | "limit", "opponent","post_only" Position limit will be applied to post_only while order limit will not. |                                   |
 | margin_frozen                     | true          | decimal  | Freeze margin                                                |                                   |
 | profit                            | true          | decimal  | profit                                                       |                                   |
+| order_id                       | true          | bigint     | Order ID                                                     |                                     |
+| order_id_str                       | true          | string     | Order ID                                                     |                                     |
+| order_type         |	true         |	int     |  Order type: 1. Quotation; 2. Cancelled order; 3. Forced liquidation; 4. Delivery Order  |
+| client_order_id                | true          | long     | Client order ID                                              |                                     |
+| trade_volume                   | true          | decimal  | Transaction quantity                                         |                                     |
+| trade_turnover                 | true          | decimal  | Transaction aggregate amount                                 |                                     |
+| fee                            | true          | decimal  | Servicefee                                                   |                                     |
+| trade_avg_price                | true          | decimal  | Transaction average price                                    |                                     |
+| status                         | true          | int      | status: 1. Ready to submit the orders; 2. Ready to submit the orders; 3. Have sumbmitted the orders; 4. Orders partially matched; 5. Orders cancelled with  partially matched; 6. Orders fully matched; 7. Orders cancelled; 11. Orders cancelling. |                                     |
 | total_page                        | true          | int      | Page in total                                                |                                   |
 | current_page                      | true          | int      | Current Page                                                 |                                   |
 | total_size                        | true          | int      | Total Size                                                   |                                   |
@@ -4325,7 +4348,7 @@ Please note that created_at can't send "0"
 | status                         | true          | string   | Request Processing Result                                    |                                   |
 | \<list\>(Attribute Name: data) |               |          |                                                              |                                   |
 | symbol                         | true          | string   | Variety code                                                 |                                   |
-| contract_type                  | true          | string   | Contract Type                                                | "this_week","next_week","quarter" |
+| contract_type                  | true          | string   | Contract Type                                                | "this_week","next_week","quarter","next_quarter" |
 | contract_code                  | true          | string   | Contract Code                                                | "BTC180914" ...                   |
 | volume                         | true          | decimal  | Number of Order                                              |                                   |
 | price                          | true          | decimal  | Price committed                                              |                                   |
@@ -4426,7 +4449,7 @@ When getting information on order cancellation via query history orders interfac
 | order_id                         | true          | bigint     | Order ID                                                     |                                   |
 | order_id_str                         | true          | string     | Order ID                                                     |                                   |
 | symbol                           | true          | string   | Variety code                                                 |                                   |
-| contract_type                    | true          | string   | Contract Type                                                | "this_week","next_week","quarter" |
+| contract_type                    | true          | string   | Contract Type                                                | "this_week","next_week","quarter","next_quarter" |
 | contract_code                    | true          | string   | Contract Code                                                | "BTC180914" ...                   |
 | lever_rate                       | true          | int      | Leverage Rate                                                | 1\\5\\10\\20                      |
 | direction                        | true          | string   | Transaction direction                                        |                                   |
@@ -4460,7 +4483,7 @@ The return order_id is 18 bits, it will make  mistake when nodejs and JavaScript
 
 ###  Example 
 
-- POST `api/v1/contract_matchresults`
+- POST `api/v1/contract_matchresults`
 
 ### Request Parameter
 
@@ -4520,7 +4543,7 @@ order_id               | true     | bigint    | order ID              |         
 order_id_str               | true     | string    | order ID              |              |
 symbol                 | true     | string  | contract type code               |              |
 order_source                 | true     | string  | Order Source               |              |
-contract_type          | true     | string  | contract type               |  deliver on this Friday then "this_week"; deliver on next Friday then "next_week"; for quarterly contract then "quarter"  |
+contract_type          | true     | string  | contract type               |  deliver on this Friday then "this_week"; deliver on next Friday then "next_week"; for quarterly contract then "quarter", Next Quarterly Contract: "next_quarter"  |
 contract_code          | true     | string  | contract code              |  "BTC180914" ...       |
 direction              | true     | string  | "buy": to bid/ go long; "sell": to ask/ go short.         |              |
 offset                 | true     | string  | "open": open positions; "close": close positions           |              |
@@ -4561,7 +4584,7 @@ ts                     | true     | long    | timestamp                |        
 |  Params                |   Mandatory  |   Type    |    Desc              |   Value Range       |
 | ----------------------- | -------- | ------- | ------------------ | -------------- |
 | symbol | false | String | symbol	 | Case-Insenstive.Both uppercase and lowercase are supported."BTC","ETH"... |
-| contract_type | false | String | contract type | “this_week”，“next_week”，“quarter”|
+| contract_type | false | String | contract type | “this_week”，“next_week”，“quarter”,"next_quarter"|
 | contract_code | false | String | contract code | BTC190903 |
 | trigger_type | true | String | trigger： `ge` Equal to or Greater than；`le` Less than or Equal to |  |
 | trigger_price | true | Number | Trigger Price |  |
@@ -4691,7 +4714,7 @@ ts                     | true     | long    | timestamp                |        
 | -----  | -----  |  -----  | ----- |
 |  symbol  |  String  |  true  |  Case-Insenstive.Both uppercase and lowercase are supported.BTC、LTC...  |
 |  contract_code  |  String  |  false  |  contract code,"BTC180914" ...  |
-|  contract_type  |  String  |  false  |  contract type	"this_week" "next_week" "quarter"  |
+|  contract_type  |  String  |  false  |  contract type	"this_week" "next_week" "quarter" "next_quarter" |
 
 ### Note
 
@@ -5017,7 +5040,7 @@ ts                     | true     | long    | timestamp                |        
 
 ### Example
 
-- POST `https://api.huobi.pro/v1/futures/transfer`
+- POST `https://api.huobi.pro/v1/futures/transfer`
 
 ### Notice
 
@@ -5494,7 +5517,7 @@ Add computed value into the Signature parameter in API request. Please note the 
 
   Parameter Name |   Mandatory   |     Type |   Description   |   Default  |   Value Range
 --------------| -----------------| ---------- |----------| ------------  | --------------------------------------------------------------------------------  |
-  symbol  |       true         |  string  |   Pairs  |               |  Case-Insenstive.Both uppercase and lowercase are supported..E.G.: "BTC_CW" stands for BTC weekly contract, "BTC_NW" stands for BTC Bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract |
+  symbol  |       true         |  string  |   Pairs  |               |  Case-Insenstive.Both uppercase and lowercase are supported..E.G.: "BTC_CW" stands for BTC weekly contract, "BTC_NW" stands for BTC Bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract."BTC_NQ" stands for BTC next quarterly contract |
   period    |     true          | string   | Kline Period   |            | Case-Senstive.Only lowercase is supported. 1min, 5min, 15min, 30min, 60min,4hour,1day,1week, 1mon  |
 
 ### Return Parameter 
@@ -5575,7 +5598,7 @@ Add computed value into the Signature parameter in API request. Please note the 
 
   Parameter Name |    Mandatory   |   Type  |  Description  |    Default   |   Value Range
 -------- | -------- | ------ | ------ | ------- |---------------------------------------- 
-  symbol | true | string | Pairs | | Case-Insenstive.Both uppercase and lowercase are supported..E.g.: "BTC_CW" stands for BTC weekly contract, "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract |
+  symbol | true | string | Pairs | | Case-Insenstive.Both uppercase and lowercase are supported..E.g.: "BTC_CW" stands for BTC weekly contract, "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract."BTC_NQ" stands for BTC next quarterly contract |
   period | false | string | Kline Period | | Case-Senstive.Only lowercase is supported.1min, 5min, 15min, 30min, 60min,4hour,1day,1week, 1mon|
   from   | true | long  |  Start Time | | |
   to      | true | long | End Time | | |
@@ -5685,7 +5708,7 @@ Clients can request 2000 Klines at most in one request
 
  Parameter Name   |  Mandatory   |  Type   |  Description      |    Default   |  Value Range  |
   -------------- |   -------------- |  ---------- |  ------------ |  ------------ |  ---------------------------------------------------------------------------------  |
-  symbol         |  true           |  string     |    Pairs          |        |  Case-Insenstive.Both uppercase and lowercase are supported..E.g.: "BTC_CW" stands for BTC weekly contract, "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract.  |
+  symbol         |  true           |  string     |    Pairs          |        |  Case-Insenstive.Both uppercase and lowercase are supported..E.g.: "BTC_CW" stands for BTC weekly contract, "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract."BTC_NQ" stands for BTC next quarterly contract.  |
   type           |  true           |  string     |    Depth Type      |        |  Get depth data within step 150, use step0, step1, step2, step3, step4, step5, step14, step15（merged depth data 0-5, 14-15）；when step is 0，depth data will not be merged; Get depth data within step 20, use step6, step7, step8, step9, step10, step11, step12, step13(merged depth data 7-13); when step is 6, depth data will not be merged. |
 
 ### Note:
@@ -5778,7 +5801,7 @@ ch | true |  string | Data channel, Format： market.period | |
 
  Parameter Name   |  Mandatory   |  Type   |  Description      |    Default   |  Value Range  |
   -------------- |   -------------- |  ---------- |  ------------ |  ------------ |  ---------------------------------------------------------------------------------  |
-  symbol         |  true           |  string     |    Pairs          |        |  Case-Insenstive.Both uppercase and lowercase are supported.. E.g.: "BTC_CW" stands for BTC weekly contract, "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract.  |
+  symbol         |  true           |  string     |    Pairs          |        |  Case-Insenstive.Both uppercase and lowercase are supported.. E.g.: "BTC_CW" stands for BTC weekly contract, "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract."BTC_NQ" stands for BTC next quarterly contract. "BTC_NQ" stands for BTC next quarterly contract.  |
   size           |  true           |  integer     |    Depth size      |        |  `20`: stands for 20 unmerged data. `150`:stands for 150 unmerged data.|
   data_type           |  false          |  string     |    Depth size      |        |  data type. `snapshot` by default. `incremental`: incremental data.`snapshot`: full data.|
 
@@ -6014,7 +6037,7 @@ ch | true |  string | Data channel, Format： `market.$symbol.depth.size_${size}
 
  Parameter Name   |  Mandatory   |  Type   |  Description      |    Default   |  Value Range  |
   -------------- |   -------------- |  ---------- |  ------------ |  ------------ |  ---------------------------------------------------------------------------------  |
-  symbol         |  true           |  string     |    Pairs          |        |  Case-Insenstive.Both uppercase and lowercase are supported.. E.g.:  "BTC190412" stands for BTC contract with the the delivery date of 20190412, "BTC_CW" stands for BTC weekly contract, "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract. "BTC_NQ" stands for BTC next quarterly contract |
+  symbol         |  true           |  string     |    Pairs          |        |  Case-Insenstive.Both uppercase and lowercase are supported.. E.g.:  "BTC190412" stands for BTC contract with the the delivery date of 20190412, "BTC_CW" stands for BTC weekly contract, "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract."BTC_NQ" stands for BTC next quarterly contract. "BTC_NQ" stands for BTC next quarterly contract |
 
 
 ### Return Parameter
@@ -6091,7 +6114,7 @@ ch | true |  string | Data channel, Format： `market.$symbol.bbo` | |
 
 Parameter Name  |  Mandatory  |    Type  |     Description   |  Default   |  Value Range |
 -------------- |  -------------- |  ---------- |  ------------ |  ------------ |  --------------------------------------------------------------------------------  |
-  symbol         |  true           |  string     |     Pairs   |              |  Case-Insenstive.Both uppercase and lowercase are supported..E.g. "BTC_CW" stands for BTC Weekly contract, "BTC_NW" stands for BTC Bi-weekly contract, "BTC_CQ" stands for BTC Quarterly contract|
+  symbol         |  true           |  string     |     Pairs   |              |  Case-Insenstive.Both uppercase and lowercase are supported..E.g. "BTC_CW" stands for BTC Weekly contract, "BTC_NW" stands for BTC Bi-weekly contract, "BTC_CQ" stands for BTC Quarterly contract,"BTC_NQ" stands for BTC next quarterly contract.|
 
 
 ### Return Parameter
@@ -6164,7 +6187,7 @@ Return to the current trade detail data only
 
   Parameter Name    | Mandatory   |  Type    |   Description   |   Default     |   Value Range  |
 -------------- |  -------------- |  ---------- |  ---------- |  ------------ |  --------------------------------------------------------------------------------|
-  symbol         |  true           |  string     |  contract type    |            | Case-Insenstive.Both uppercase and lowercase are supported..E.g.: "BTC_CW" stands for BTC weekly contract,  "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract |
+  symbol         |  true           |  string     |  contract type    |            | Case-Insenstive.Both uppercase and lowercase are supported..E.g.: "BTC_CW" stands for BTC weekly contract,  "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract."BTC_NQ" stands for BTC next quarterly contract."BTC_NQ" stands for BTC next quarterly contract. |
 
 ### Return Parameter
 
@@ -6229,7 +6252,7 @@ ts  |  true  |  number  |  Order Creation Time |   |
 
   Parameter Name    | Mandatory   |  Type    |   Description   |   Default     |   Value Range  |
 -------------- |  -------------- |  ---------- |  ---------- |  ------------ |  --------------------------------------------------------------------------------|
-  symbol         |  true           |  string     |  contract type    |            | Case-Insenstive.Both uppercase and lowercase are supported..E.g.: "BTC_CW" stands for BTC weekly contract,  "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract |
+  symbol         |  true           |  string     |  contract type    |            | Case-Insenstive.Both uppercase and lowercase are supported..E.g.: "BTC_CW" stands for BTC weekly contract,  "BTC_NW" stands for BTC bi-weekly contract, "BTC_CQ" stands for BTC quarterly contract."BTC_NQ" stands for BTC next quarterly contract |
 
 >Example of a successful subscribe request：
 
@@ -6449,7 +6472,7 @@ direction  |  true  |  string  |  Order direction  |   |
 ### Request Parameter：
 | **Parameter Name**    | **Mandotary** | **Type** | **Desc**        | **Default** | **Value Range**                                 |
 | ----------- | -------- | ------ | ------------- | ------- | ---------------------------------------- |
-| symbol      | true     | string | symbol name          |         | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”.                          |
+| symbol      | true     | string | symbol name          |         | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”."BTC_NQ" represents BTC “Next Quarter”.                          |
 | period          | true     | string  | kline period               |         | 1min,5min, 15min, 30min, 60min,4hour,1day,1mon     |
 | basis_price_type          | false     | string  | use basis price type to calculate the basis data       |    Using open price default   |    open price："open"，close price："close"，highest price："high"，lowest price："low"，avg=（high price +low price）/2："average"   |
 
@@ -6499,7 +6522,7 @@ direction  |  true  |  string  |  Order direction  |   |
 ### Request Parameter：
 | **Parameter Name**    | **Mandotary** | **Type** | **Desc**        | **Default** | **Value Range**                                 |
 | ----------- | -------- | ------ | ------------- | ------- | ---------------------------------------- |
-| symbol      | true     | string | symbol name          |         | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”.                          |
+| symbol      | true     | string | symbol name          |         | Case-Insenstive.Both uppercase and lowercase are supported..e.g. "BTC_CW" represents BTC “This Week”，"BTC_NW" represents BTC “Next Week”，"BTC_CQ" represents BTC “Quarter”."BTC_NQ" represents BTC “Next Quarter”.                          |
 | period          | true     | string  | kline type               |         | 1min, 5min, 15min, 30min, 60min,4hour,1day, 1mon     |
 | basis_price_type          | false     | string  | use basis price type to calculate the basis data       |    Using open price default   |    open price："open"，close price："close"，highest price："high"，lowest price："low"，avg=（high price +low price）/2："average"   |
 | from          | true     | long  | start time, from 2017-07-28T00:00:00+08:00 to 2050-01-01T00:00:00+08:00. timestamp unit：seconds               |         |    |
@@ -6580,7 +6603,8 @@ To subscribe order data, Clients have to make connection to the Server and send 
 
 {
 	"op": "notify",
-	"topic": "orders.btc",
+  "topic": "orders.btc",
+  "uid": "100011",
 	"ts": 1489474082831,
 	"symbol": "BTC",
 	"contract_type": "this_week",
@@ -6604,7 +6628,8 @@ To subscribe order data, Clients have to make connection to the Server and send 
 	"trade_avg_price": 10,
 	"margin_frozen": 10,
 	"profit": 2,
-	"fee_asset":"BTC",
+  "fee_asset":"BTC",
+  "canceled_at": 1408076414000, 
 	"trade": [{
 		"id": "2131234825-6124591349-1",
 		"trade_id": 112,
@@ -6625,6 +6650,7 @@ To subscribe order data, Clients have to make connection to the Server and send 
 | ----------------------- | ------- | ------------------------------------------------------------ |
 | op                      | string  | Required;Operator Name，Order push value is notify ;                          |
 | topic                   | string  | Required; Order push topic                                              |
+| uid                   | string  |account uid                                              |
 | ts                      | long    | Server responses timestamp                                           |
 | symbol                  | string  | Coin                                                      |
 | contract_type           | string  | Contract Type                                                    |
@@ -6642,6 +6668,7 @@ To subscribe order data, Clients have to make connection to the Server and send 
 | order_source            | int     | Order source(system: System; Web: web; API: api; m:Mobile; risk: risk control system) |
 | order_type              | int     | Order type 1Requested orders; 2. Cancelled orders; 3. Liquidated orders; 4. Delivered orders                 |
 | created_at              | long    | order creation time                                                |
+| canceled_at              | long    | order canceled time                                                |
 | trade_volume            | decimal | trade volume(Cont.)                                                     |
 | trade_turnover          | decimal | Turnover                                                   |
 | fee                     | decimal | Fees                                                       |
@@ -6649,6 +6676,7 @@ To subscribe order data, Clients have to make connection to the Server and send 
 | margin_frozen           | decimal | Frozen Margin                                                   |
 | profit                  | decimal | Profits&Losses                                                       |
 | fee_asset   | string | the corresponding cryptocurrency to the given fee |
+
 | liquidation_type              | string     | 0:Not Forced Liquidation Type，1：Netting Type， 2: Partial Takeover，3：All Takeover       |                                          |
 | \<list\>( Attribute Name: trade) |         |                                                              |
 | id            | string| 	the global unique id of the trade.。                                                       |
@@ -6768,6 +6796,7 @@ To subscribe order data, Clients have to make connection to the Server and send 
 {
   "op": "notify",           
   "topic": "matchOrders.btc",     
+  "uid": "1315816",
   "ts": 1489474082831,    
   "symbol": "BTC",         
   "contract_type": "this_week",     
@@ -6795,6 +6824,7 @@ To subscribe order data, Clients have to make connection to the Server and send 
 | ----------------------- | ------- | ------------------------------------------------------------ |
 | op                      | string  | notify;                          |
 | topic                   | string  | topic                                              |
+| uid                   | string  |account uid                                              |
 | ts                      | long    | | server response timestamp                                             |
 | symbol                  | string  | ID                                                       |
 | contract_type           | string  | contract type                                                     |
@@ -6803,6 +6833,8 @@ To subscribe order data, Clients have to make connection to the Server and send 
 | order_id                | bigint    |                                                        |
 | order_id_str            | string   |                                                      |
 | order_type              | int     | Order type: 1. Quotation; 2. Cancelled order; 3. Forced liquidation; 4. Delivery Order                 |
+| trade_volume            | decimal | total filled volume of the order                                                       |
+| volume            | decimal | total volume of the order                                                       |
 | \<list\>(attr: trade) |         |                                                              |
 | id            | string| 	the global unique id of the trade.                                                       |
 | trade_id                | long    | In this interface, trade_id is the same with match_id of api/v1/contract_matchresults. trade_id  is the result of sets of order execution and trade confirmation. NOTE: trade_id is not unique, which includes all trade records of a taker order and N maker orders. If the taker order matches with N maker orders, it will create N trades with same trade_id.                                                  |
@@ -6905,6 +6937,7 @@ To subscribe accounts equity data updates, the client has to make connection to 
 {
 	"op": "notify",
 	"topic": "accounts",
+  "uid": "1315816",
 	"ts": 1489474082831,
 	"event": "order.match",
 	"data": [{
@@ -6930,6 +6963,7 @@ To subscribe accounts equity data updates, the client has to make connection to 
 
 | Field Name               | Type   | Description                                                         |
 | ----------------------- | ------- | ------------------------------------------------------------ |
+| uid                   | string  |account uid                                              |
 | ts                        | long  | Time of Respond Generation, Unit: Millisecond                          |
 | event                     | string  | notification on account asset change such as commit order(order.open), fulfill order(order.match)(excluding liquidated order and settled orders), settlement and delivery(settlement), fulfill liquidation order(order.liquidation)(including voluntarily fulfilled liquidation order and the fulfilled liquidation order taken over by system ) , cancel order(order.cancel), asset transfer（contract.transfer) (including withdraw and deposit), system (contract.system), other asset change(other), initial margin(init)                                              |
 | \<data\>            |   |                                                        |
@@ -7045,6 +7079,7 @@ To subscribe position updates data, the client has to make connection to the ser
 {
 	"op": "notify",
 	"topic": "positions",
+  "uid": "1315816",
 	"ts": 1489474082831,
 	"event": "order.match",
 	"data": [{
@@ -7073,12 +7108,13 @@ To subscribe position updates data, the client has to make connection to the ser
 
 |   Filed Name           | Type    | Description                                                        |
 | ----------------------- | ------- | ------------------------------------------------------- |
+| uid                   | string  |account uid                                              |
 | ts                     | long  | Time of Respond Generation, Unit: Millisecond	                           |
 | event                  | string  | Notification on position change such as commit order(order.open), fulfill order(order.match)(excluding liquidated order and settled orders), settlement and delivery(settlement), fulfill liquidation order(order.liquidation)(including voluntarily fulfilled liquidation order and the fulfilled liquidation order taken over by system ) , cancel order(order.cancel), asset transfer（contract.transfer) (including withdraw and deposit), system (contract.system), initial margin(init)                                             |
 | \<data\>            |   |                                                        |
 | symbol                 | string    | Coin, when $symbol value is *, it stands for subscribing the data of all coins                       |
 | contract_code          | string  | Contract Code                                                      |
-| contract_type          | string  | Contract Type, Weekly contract: "this_week", Bi-weeklycontract: "next_week", Quarterly Contract: "quarter", Expired Contract: “delivered”                                                    |
+| contract_type          | string  | Contract Type, Weekly contract: "this_week", Bi-weeklycontract: "next_week", Quarterly Contract: "quarter",  Next Quarterly Contract: "next_quarter"“delivered”                                                    |
 | volume                 | decimal  | Open Interest                                                     |
 | available              | decimal | Positions available to close                                                     |
 | frozen                 | decimal | Frozen Margin                                                      |
@@ -7363,7 +7399,7 @@ To subscribe contract info, the client has to make connection to the server and 
 | \<data\>   | object array |     |    |
 | symbol |string | symbol,"BTC","ETH"... |
 | contract_code  | string   |  contract code,"EOS200113"  |
-| contract_type  | string   |  contract type, "this_week","next_week", "quarter", "next_quarter" |
+| contract_type  | string   |  contract type, "this_week","next_week", "quarter", "next_quarter",  Next Quarterly Contract: "next_quarter" |
 | contract_size  | decimal | Contract Value (USD of one contract). such as 10,100| 10, 100... |
 | price_tick  | decimal | Minimum Variation of Contract Price | 0.001, 0.01... |
 | delivery_date  |  string  | delivery  date    | such as "20200327"  |
