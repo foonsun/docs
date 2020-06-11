@@ -805,7 +805,8 @@ Please note that, for both public interface and private interface, there are rat
     order push connection for BTC Contract which will automatically push orders of BTC weekly, BTC biweekly and BTC quarterly
     contracts. Please note that the rate limit of WS order push and RESTFUL private interface are separated from each other, with no relations.
 
-* Will response following string for "header" via api 
+
+* Will response following string for "header" via api. E.g,you will get the total Query ratelimit("ratelimit-limit") and the remaining Query ratelimit("ratelimit-remaining") when you query the order info(/api/v1/contract_order_info) and you will get the total Trade ratelimit("ratelimit-limit") and the remaining Trade ratelimit("ratelimit-remaining").
 
     ratelimit-limit: the upper limit of requests per time, unit: time
 
